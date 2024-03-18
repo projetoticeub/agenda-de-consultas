@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/paciente")
+@RequestMapping("/pacientes")
 public class PacienteController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class PacienteController {
         var paciente = new Paciente(dados);
         service.salvar(paciente);
         var uri = uriBuilder.path("/paciente/{id}").buildAndExpand(paciente.getId()).toUri();
-        return ResponseEntity.ok().body(paciente);
+        return ResponseEntity.created(uri).body(paciente);
     }
 
 }
