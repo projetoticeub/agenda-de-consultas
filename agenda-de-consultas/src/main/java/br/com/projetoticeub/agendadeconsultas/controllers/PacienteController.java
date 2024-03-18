@@ -1,5 +1,6 @@
 package br.com.projetoticeub.agendadeconsultas.controllers;
 
+import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosAtualizacaoPaciente;
 import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosListagemPacientes;
 import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosSalvarPacienteDto;
 import br.com.projetoticeub.agendadeconsultas.models.Paciente;
@@ -20,7 +21,7 @@ public class PacienteController {
     private PacienteService service;
 
     @PostMapping
-    public ResponseEntity<Paciente> save(@RequestBody @Valid DadosSalvarPacienteDto dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Paciente> salvar(@RequestBody @Valid DadosSalvarPacienteDto dados, UriComponentsBuilder uriBuilder) {
         var paciente = new Paciente(dados);
         service.salvar(paciente);
         var uri = uriBuilder.path("/paciente/{id}").buildAndExpand(paciente.getId()).toUri();
@@ -41,6 +42,12 @@ public class PacienteController {
         return ResponseEntity.ok(paciente);
     }
 
-
+    @PutMapping
+    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoPaciente dados) {
+        var paciente = service.buscarPorId(dados.id());
+        paciente.atualizarInformacoes(dados);
+        paciente = service.atualizar(paciente);
+        return ResponseEntity.ok().body(paciente);
+    }
 
 }

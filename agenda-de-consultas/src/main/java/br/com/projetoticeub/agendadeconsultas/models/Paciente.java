@@ -1,5 +1,6 @@
 package br.com.projetoticeub.agendadeconsultas.models;
 
+import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosAtualizacaoPaciente;
 import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosSalvarPacienteDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -37,5 +38,27 @@ public class Paciente {
         this.email = dados.email();
         this.genero = dados.genero();
         this.endereco = new Endereco(dados.endereco());
+    }
+
+    public void atualizarInformacoes(DadosAtualizacaoPaciente dados) {
+        if (dados.nomeCompleto() != null) {
+            this.nomeCompleto = dados.nomeCompleto();
+        }
+        if (dados.dataNascimento() != null) {
+            this.dataNascimento = dados.dataNascimento();
+        }
+        if (dados.telefone() != null) {
+            this.telefone = dados.telefone();
+        }
+        if (dados.email() != null) {
+            this.email = dados.email();
+        }
+        if (dados.genero() != null) {
+            this.genero = dados.genero();
+        }
+        if (dados.endereco() != null) {
+            this.endereco = this.endereco != null ? this.endereco : new Endereco();
+            this.endereco.atualizarInformacoes(dados.endereco());
+        }
     }
 }
