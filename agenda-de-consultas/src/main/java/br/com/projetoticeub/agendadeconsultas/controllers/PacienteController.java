@@ -5,16 +5,12 @@ import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosSalvarPacien
 import br.com.projetoticeub.agendadeconsultas.models.Paciente;
 import br.com.projetoticeub.agendadeconsultas.services.PacienteService;
 import jakarta.validation.Valid;
-import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.awt.print.Pageable;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/pacientes")
@@ -38,5 +34,13 @@ public class PacienteController {
                .toList();
        return ResponseEntity.ok(pacientes);
     }
+
+    @GetMapping("/{cpf}")
+    public ResponseEntity<Paciente> listarPorCpf(@PathVariable String cpf){
+        var paciente = service.listarPeloCpf(cpf);
+        return ResponseEntity.ok(paciente);
+    }
+
+
 
 }

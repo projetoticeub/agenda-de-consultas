@@ -21,4 +21,8 @@ public class PacienteService {
         return repository.findAll();
     }
 
+    public Paciente listarPeloCpf(String cpf){
+        return repository.findForCpf(cpf);
+    }
+
 }
