@@ -5,8 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
-public record DadosAtualizacaoPaciente(@NotNull
-                                       Long id,
+public record DadosAtualizacaoPaciente(@NotNull Long id,
                                        String nomeCompleto,
                                        LocalDate dataNascimento,
                                        String telefone,
