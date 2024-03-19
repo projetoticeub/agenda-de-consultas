@@ -43,6 +43,9 @@ public class PacienteController {
 
     @GetMapping("/{cpf}")
     public ResponseEntity listarPorCpf(@PathVariable String cpf){
+        if(!service.cpfJaCadastrado(cpf) ) {
+            return ResponseEntity.badRequest().body("CPF não encontrado!");
+        }
         var paciente = service.listarPeloCpf(cpf);
         return ResponseEntity.ok(paciente);
     }
