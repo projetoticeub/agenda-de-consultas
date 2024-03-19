@@ -6,8 +6,11 @@ import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosListagemPaci
 import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosSalvarPaciente;
 import br.com.projetoticeub.agendadeconsultas.models.Paciente;
 import br.com.projetoticeub.agendadeconsultas.services.PacienteService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -30,10 +33,9 @@ public class PacienteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DadosListagemPacientes>> listar() {
-       var pacientes = service.listarTodos().stream()
-               .map(DadosListagemPacientes::new)
-               .toList();
+    public ResponseEntity<List<DadosListagemPacientes>> listar(@PageableDefault(size = 10, sort = {"nomeCompleto"}) Pageable paginacao) {
+       var pacientes = service.listarTodos(paginacao).stream()
+               .map(DadosListagemPacientes::new).toList();
        return ResponseEntity.ok(pacientes);
     }
 

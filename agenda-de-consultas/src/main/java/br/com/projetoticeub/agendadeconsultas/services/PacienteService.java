@@ -4,6 +4,8 @@ import br.com.projetoticeub.agendadeconsultas.models.Paciente;
 import br.com.projetoticeub.agendadeconsultas.repositories.PacienteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,15 +21,14 @@ public class PacienteService {
         return repository.save(paciente);
     }
 
-    public List<Paciente> listarTodos() {
-        return repository.findAll();
+    public Page<Paciente> listarTodos(Pageable paginacao) {
+        return repository.findAll(paginacao);
     }
 
     public Paciente listarPeloCpf(String cpf){
         return repository.findForCpf(cpf);
     }
 
-    @Transactional
     public Paciente buscarPorId(Long id) {
         return repository.getReferenceById(id);
     }
