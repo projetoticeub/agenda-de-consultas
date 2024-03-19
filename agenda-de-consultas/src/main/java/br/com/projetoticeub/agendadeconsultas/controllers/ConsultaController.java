@@ -20,7 +20,7 @@ public class ConsultaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity Salvar(@RequestBody @Valid DadosAgendamentoConsulta dados) {
+    public ResponseEntity salvar(@RequestBody @Valid DadosAgendamentoConsulta dados) {
         var consulta = service.agendar(dados);
         return ResponseEntity.ok(consulta);
     }

@@ -1,8 +1,9 @@
 package br.com.projetoticeub.agendadeconsultas.controllers;
 
 import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosAtualizacaoPaciente;
+import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosDetalhesPaciente;
 import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosListagemPacientes;
-import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosSalvarPacienteDto;
+import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosSalvarPaciente;
 import br.com.projetoticeub.agendadeconsultas.models.Paciente;
 import br.com.projetoticeub.agendadeconsultas.services.PacienteService;
 import jakarta.validation.Valid;
@@ -21,11 +22,11 @@ public class PacienteController {
     private PacienteService service;
 
     @PostMapping
-    public ResponseEntity<Paciente> salvar(@RequestBody @Valid DadosSalvarPacienteDto dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity salvar(@RequestBody @Valid DadosSalvarPaciente dados, UriComponentsBuilder uriBuilder) {
         var paciente = new Paciente(dados);
         service.salvar(paciente);
         var uri = uriBuilder.path("/paciente/{id}").buildAndExpand(paciente.getId()).toUri();
-        return ResponseEntity.created(uri).body(paciente);
+        return ResponseEntity.created(uri).body(new DadosDetalhesPaciente(paciente));
     }
 
     @GetMapping
@@ -37,7 +38,7 @@ public class PacienteController {
     }
 
     @GetMapping("/{cpf}")
-    public ResponseEntity<Paciente> listarPorCpf(@PathVariable String cpf){
+    public ResponseEntity listarPorCpf(@PathVariable String cpf){
         var paciente = service.listarPeloCpf(cpf);
         return ResponseEntity.ok(paciente);
     }
@@ -47,7 +48,7 @@ public class PacienteController {
         var paciente = service.buscarPorId(dados.id());
         paciente.atualizarInformacoes(dados);
         paciente = service.atualizar(paciente);
-        return ResponseEntity.ok().body(paciente);
+        return ResponseEntity.ok().body(new DadosDetalhesPaciente(paciente));
     }
 
 }

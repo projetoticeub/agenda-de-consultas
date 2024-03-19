@@ -1,7 +1,7 @@
 package br.com.projetoticeub.agendadeconsultas.models;
 
 import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosAtualizacaoPaciente;
-import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosSalvarPacienteDto;
+import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosSalvarPaciente;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,7 +30,7 @@ public class Paciente {
     @Embedded
     private Endereco endereco;
 
-    public Paciente(DadosSalvarPacienteDto dados) {
+    public Paciente(DadosSalvarPaciente dados) {
         this.nomeCompleto = dados.nomeCompleto();
         this.cpf = dados.cpf();
         this.dataNascimento = dados.dataNascimento();

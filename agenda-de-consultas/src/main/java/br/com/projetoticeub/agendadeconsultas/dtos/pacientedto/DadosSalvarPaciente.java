@@ -8,24 +8,24 @@ import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
-public record DadosSalvarPacienteDto( @NotBlank
+public record DadosSalvarPaciente(@NotBlank
                                       String nomeCompleto,
 
-                                      @NotNull @Pattern(regexp = ("\\d{11}"))
+                                  @NotNull @Pattern(regexp = ("\\d{11}"))
                                       String cpf,
 
-                                      @NotNull
+                                  @NotNull
                                       LocalDate dataNascimento,
 
-                                      @NotBlank
+                                  @NotBlank
                                       String telefone,
 
-                                      @NotNull
+                                  @NotNull
                                       @Email
                                       String email,
 
-                                      String genero,
+                                  String genero,
 
-                                      @NotNull
+                                  @NotNull
                                       DadosEndereco endereco) {
 }
