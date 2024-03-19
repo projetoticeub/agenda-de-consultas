@@ -15,5 +15,4 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
     @Query("SELECT p FROM Paciente p")
     Page<Paciente> findAll(Pageable pageable);
 
-
 }

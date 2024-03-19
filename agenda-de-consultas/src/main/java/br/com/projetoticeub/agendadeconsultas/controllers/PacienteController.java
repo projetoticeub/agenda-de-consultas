@@ -6,7 +6,6 @@ import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosListagemPaci
 import br.com.projetoticeub.agendadeconsultas.dtos.pacientedto.DadosSalvarPaciente;
 import br.com.projetoticeub.agendadeconsultas.models.Paciente;
 import br.com.projetoticeub.agendadeconsultas.services.PacienteService;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +25,9 @@ public class PacienteController {
 
     @PostMapping
     public ResponseEntity salvar(@RequestBody @Valid DadosSalvarPaciente dados, UriComponentsBuilder uriBuilder) {
+        if(service.cpfJaCadastrado(dados.cpf())) {
+           return ResponseEntity.badRequest().body("CPF já cadastrado! ");
+        }
         var paciente = new Paciente(dados);
         service.salvar(paciente);
         var uri = uriBuilder.path("/paciente/{id}").buildAndExpand(paciente.getId()).toUri();

@@ -8,8 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class PacienteService {
 
@@ -36,6 +34,11 @@ public class PacienteService {
     @Transactional
     public Paciente atualizar(Paciente paciente) {
         return repository.save(paciente);
+    }
+
+    public boolean cpfJaCadastrado(String cpf){
+        var paciente =  repository.findForCpf(cpf);
+        return paciente != null;
     }
 
 }
